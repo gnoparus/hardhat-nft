@@ -54,6 +54,7 @@ module.exports = async function ({ getNamedAccounts, deployments }) {
         vrfCoordinatorAddress = networkConfig[chainId]["vrfCoordinatorV2"]
         subscriptionId = networkConfig[chainId]["subscriptionId"]
     }
+    console.log(`subscriptionId : ${subscriptionId}`)
 
     const args = [
         vrfCoordinatorAddress,
