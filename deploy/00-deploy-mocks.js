@@ -6,7 +6,11 @@ const GAS_PRICE_LINK = 1e9
 module.exports = async ({ getNamedAccounts, deployments }) => {
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
-    const args = [BASE_FEE, GAS_PRICE_LINK]
+    const args1 = [BASE_FEE, GAS_PRICE_LINK]
+
+    const DECIMALS = "18"
+    const INITIAL_PRICE = ethers.utils.parseEther("2000", "ether")
+    const args2 = [DECIMALS, INITIAL_PRICE]
 
     const chainId = network.config.chainId
 
@@ -16,8 +20,15 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         await deploy("VRFCoordinatorV2Mock", {
             from: deployer,
             log: true,
-            args: args,
+            args: args1,
         })
+
+        await deploy("MockV3Aggregator", {
+            from: deployer,
+            log: true,
+            args: args2,
+        })
+
         log("Mocks deployed!!")
         log("----------------------------------------------------")
     }
